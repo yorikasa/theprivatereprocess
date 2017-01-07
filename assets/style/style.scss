@@ -1,0 +1,461 @@
+@import '_partials/reset';
+@import '_partials/variables';
+
+h1, h2, h3, h4, h5{
+    font-weight: normal;
+    font-family: $humanist;
+}
+a:link, a:visited{
+    color: inherit;
+    text-decoration: underline;
+}
+a:hover{
+    color: $link;
+    text-decoration: underline;
+}
+
+
+body{
+    font-family: $humanist;
+    color: $black;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    // http://stackoverflow.com/questions/3220662/uiwebview-font-is-thinner-in-portrait-than-landscape
+    // !!! This code causes a bug !!!
+    // !!! position:fixed does not work !!!
+    // http://stackoverflow.com/questions/26108326/fixed-position-not-working-in-safari-7
+    //-webkit-transform: translate3d(0,0,0);
+    background-color: darken($lighterGray, 8%);
+}
+
+.stop-scrolling{
+	overflow: hidden;
+}
+
+
+#primary, #secondary, footer{
+    box-sizing: border-box;
+}
+
+// ----------------------------------------------
+
+#main{
+	position: relative;
+}
+
+#primary{
+	width: 70%;
+	position: relative;
+	margin-left: 30%;
+	padding: 2%;
+}
+
+#secondary{
+	width: 30%;
+	max-width: 400px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	// overflow-y: scroll;
+	padding: 2%;
+}
+
+#secondary{
+	@include anchor;
+	font-size: $small;
+
+    #fixed-sidebar-part{
+
+    }
+    #scrollable-sidebar-part{
+        position: relative;
+    }
+
+	.site_title{
+		font-family: $geometric;
+		font-weight: bold;
+		font-size: $biggest;
+		line-height: 120%;
+		margin-bottom: 30px;
+		display: block ;
+		@include anchor($color2: inherit);
+	}
+
+	.section-title{
+		margin: 30px 0 10px 0;
+		font-weight: bold;
+		font-size: $big;
+		clear: both;
+	}
+
+	.section{
+		margin-bottom: 30px;
+		clear: both;
+	}
+
+	.archive{
+		.year{
+			font-weight: bold;
+			display: inline-block;
+			padding-right: 5px;
+			//font-size: $big;
+		}
+		.month{
+			display: inline-block;
+			padding: 3px;
+		}
+	}
+
+	.posts{
+        overflow-y: scroll;
+        height: 100%;
+		@include anchor($color1: inherit, $under1: none,
+						$color2: inherit, $under2: none);
+	}
+
+    .tags{
+        line-height: 1.4em;
+        .tag{
+            margin-right: 3px;
+            cursor: pointer;
+        }
+        .selected{
+            background-color: $gray;
+            border-radius: 3px;
+            padding: 4px 4px 4px 7px;
+            color: white;
+        }
+    }
+
+	.switch{
+		display: inline-block;
+		//margin-bottom: 20px;
+		border: 1px solid $gray;
+		border-radius: 4px;
+		overflow: hidden;
+		float: right;
+		width: 30%;
+		span{
+			display: inline-block;
+			padding: 5px 2%;
+			width: 46%;
+			text-align: center;
+			cursor: pointer;
+			&:hover{
+				background-color: darken($lighterGray, 10%);
+				color: inherit;
+			}
+		}
+		.selected{
+			background-color: $gray;
+			color: white;
+			cursor: default;
+			&:hover{
+				background-color: $gray;
+				//background-color: darken($gray, 5%);
+				color: white;
+			}
+		}
+	}
+    .post-list-month{
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-top: 2em;
+    }
+	.post-list{
+		margin: 12px 0;
+		.title{
+			line-height: 120%;
+			margin-bottom: 3px;
+		}
+		.meta{
+			color: $gray;
+			margin-right: 5px;
+			font-size: $small;
+		}
+		.tag{
+			font-style: italic;
+			float: right;
+		}
+		&:hover{
+			//background-color: darken($lighterGray, 10%);
+			font-weight: bold;
+		}
+	}
+	form{
+		display: inline-block;
+		width: 65%;
+		input{
+			border: none;
+			border-radius: 4px;
+			line-height: 140%;
+			margin: 0;
+			padding: 5px;
+			background-color: $lighterGray;
+			width: 100%;
+			box-sizing: border-box;
+		}
+	}
+
+	hr{
+	    width: 100%;
+	    margin: 5px auto;
+	    height: 1px;
+	    border: none;
+	    color: $gray;
+	    background-color: $lightGray;
+	}
+}
+
+#primary.grid{
+	.post{
+		width: 220px;
+		float: left;
+		height: 165px;
+		overflow: hidden;
+		margin: 1%;
+		padding: 1%;
+		position: relative;
+		word-wrap: break-word;
+
+		border-bottom: 8px solid white;
+
+		&:hover{
+			.meta{
+				visibility: visible;
+			}
+		}
+
+		.post-content{
+			position: relative;
+		}
+
+		.meta{
+			position: absolute;
+			bottom: 0;
+			background-color: white;
+			padding: 5px 0 0 0;
+			border: none;
+			font-size: $smaller;
+			span{
+				margin-top: 5px;
+			}
+			visibility: hidden;
+		}
+
+		h1{
+			font-size: $normal;
+			margin: 2px 0 5px 0;
+		}
+
+		blockquote, ul, ol, hr, h2, h3, pre, code, table{
+			// visibility: hidden;
+			// display: none;
+			// line-height: 100%;
+			margin: 0;
+		}
+		p, blockquote, ul, ol, hr, h2, h3, pre, code, table{
+			font-size: $small;
+			color: $gray;
+			line-height: 150%;
+			margin: 0 !important;
+		}
+		img, video, iframe, object, embed{
+			display: block !important;
+			visibility: visible !important;
+			margin: 0 auto;
+			border-radius: 3px;
+			position: absolute;
+			top: 0;
+			background-color: white;
+		}
+	}
+}
+
+#primary, #expanded-post{
+    .post, .page{
+        max-width: $width;
+        margin: 0 auto 100px auto;
+        padding: 4% 5%;
+        font-size: $normal;
+        background-color: $white;
+        border-radius: 4px;
+        @include respond {
+            width: 90%;
+            font-size: $normal - 1px;
+        }
+
+        hr{
+            width: 100%;
+            margin: 40px auto;
+            height: 1px;
+            border: none;
+            color: $lightGray;
+            background-color: darken($lighterGray, 5%);
+        }
+
+        .meta{
+            //font-size: $small;
+            border-top: 2px solid $lighterGray;
+            color: $gray;
+            padding: 15px 0 0 0;
+            margin: 15px 0 0 0;
+            span{
+                display: inline-block;
+                margin: 5px 5px 5px 0;
+            }
+        }
+
+        h1{
+            font-size: $biggest;
+            line-height: 160%;
+            color: $blue;
+            //text-align: center;
+            @include anchor($color2: inherit);
+
+            a{
+                cursor: pointer;
+            }
+        }
+        h2{
+            margin: 40px 0 15px 0;
+            font-size: $bigger;
+        }
+        h3{
+            margin: 20px 0 10px 0;
+            font-size: $big;
+        }
+        p{
+            line-height: 200%;
+            margin: 10px 0;
+            @include respond {
+                line-height: 180%;
+            }
+        }
+        img, iframe, object, embed, video{
+            display: block;
+            margin: 40px auto;
+            max-width: 100%;
+        }
+        img.big{
+            max-width: $image_width;
+            margin-left: -($image_width - $width)/2;
+            @include respond {
+                margin: 40px auto;
+                max-width: 110%;
+                margin-left: -5%;
+            }
+        }
+        p.caption{
+            margin-top: -25px;
+            margin-bottom: 40px;
+            font-size: $small;
+            color: gray;
+            text-align: center;
+        }
+        blockquote{
+            margin: 10px 30px;
+            padding: 0 10px;
+            border-left: 2px solid $lightGray;
+            color: $gray;
+            @include respond {
+                margin: 10px 0px;
+            }
+        }
+        pre, code{
+            font-family: "Menlo", monospace;
+            font-size: $smaller;
+        }
+        pre{
+            background-color: $lighterGray;
+            border-top: 1px solid $lightGray;
+            border-bottom: 1px solid $lightGray;
+            padding: 10px 5px;
+            white-space: pre-wrap;
+            overflow: auto;
+        }
+        ul,ol{
+            margin-left: 40px;
+            @include respond {
+                margin-left: 20px;
+            }
+            li{
+                margin: 10px 0;
+                line-height: 170%;
+            }
+        }
+        em{
+            font-style: italic;
+        }
+        strong{
+            font-weight: bold;
+        }
+        table{
+        	tr{
+        		td{
+        			border: 1px solid $lightGray;
+        			padding: 10px;
+        		}
+        	}
+        }
+        .footnotes{
+        	background-color: $lighterGray;
+        	border-radius: 5px;
+        	padding: 10px;
+        	font-size: $small;
+        }
+        dl{
+            margin: 5px 0;
+            dt{
+            	line-height: 140%;
+                //font-size: $big;
+                margin: 25px 0 10px 0;
+            }
+            dd{
+                margin-left: 25px;
+                line-height: 180%;
+            }
+        }
+        .note{
+        	background-color: $lighterGray;
+        	border: 1px solid $lightGray;
+        	border-radius: 10px;
+        	padding: 20px;
+        	margin: 20px 40px;
+        }
+        .caution{
+        	background-color: lighten(yellow, 45%);
+        	border: 1px solid darken(yellow, 5%);
+        }
+        .warning{
+        	background-color: lighten(red, 40%);
+        	border: 1px solid lighten(red, 20%);
+        }
+    }
+}
+
+#expanded-post{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	bottom: 0;
+	overflow: scroll;
+	background-color:rgba(0,0,0,0.5);
+
+	.post{
+		margin: 50px auto;
+	}
+}
+
+
+@media screen and (max-width: 800px){
+    #primary{
+        width: 100%;
+        margin-left: 0;
+    }
+    #secondary{
+        width: 100%;
+        position: relative;
+    }
+}

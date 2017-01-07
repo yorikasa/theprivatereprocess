@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>The Private Reprocess</title>
+        <style media="screen">
+            <%= @style %>
+        </style>
+    <script type="text/javascript">
+        <%= @script %>
+    </script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+  <body>
+    <div id="primary">
+        <% for post in @posts.reverse %>
+            <div class="post <%= post[:tags].map{|a| 'tag-'+a}.join(" ") %>">
+                <h1 onClick="expand(this)">
+                    <a id="<%= post[:filename] %>"><%= post[:title] %></a>
+                </h1>
+                <div class="post-content">
+                    <%= post[:content] %>
+                </div>
+                <div class="meta">
+                    <div style="padding-right: 5px;"><%= post[:date].strftime("%l:%M %p %a %b %d %Y") %></div>
+                    <span><a href="../_posts/<%=post[:date].strftime("%Y")%>/<%=post[:date].strftime("%m")%>/<%=post[:filename]%>">edit</a></span>
+                </div>
+            </div>
+        <% end %>
+    </div> <!-- #primary -->
+
+    <div id="secondary">
+        <div id="fixed-sidebar-part">
+            <div class="site_title">
+                <a href="/">THE<br>PRIVATE<br>REPROCESS</a>
+            </div>
+
+            <div class="section-title">ARCHIVE</div>
+            <div class="section archive">
+                <% Time.now.year.downto(2015) do |year| %>
+                    <div class="year"><%= year %></div>
+                        <%  year_of_this_page = @posts[0][:date].year
+                            html = ""
+                            if year != year_of_this_page
+                                html = "#{year}.html"
+                            end
+                            range = 0..9
+                            if year < Time.now.year
+                                range = 1..12
+                            else
+                                range = 1..Time.now.month
+                            end
+                        %>
+                        <% range.each do |month| %>
+                            <a href="<%= html %>#post-list-<%=month%>">
+                                <div class="month"><%= "%02d"%month %></div>
+                            </a>
+                        <% end %>
+                    <br>
+                <% end %>
+            </div> <!-- .section .archive -->
+
+            <div class="section-title">TAGS</div>
+            <div class="section tags">
+                <%
+                all_tags = []
+                for post in @posts
+                    all_tags = all_tags | post[:tags]
+                end
+                for tag in all_tags %>
+                    <span class="tag" onClick="showTaggedPosts(this)"><%= tag %> </span>
+                <% end %>
+            </div> <!-- .section .tags -->
+        </div> <!-- .fixed-sidebar-part -->
+
+        <div id="scrollable-sidebar-part">
+            <div class="section-title">POSTS</div>
+            <div class="section posts">
+                <% month_index = 13 %>
+                <% for post in @posts.reverse %>
+                    <% if month_index != post[:date].month %>
+                        <div class="post-list-month" id="post-list-<%= post[:date].month %>">
+                            <%= post[:date].strftime("%B") %>
+                        </div>
+                        <% month_index = post[:date].month %>
+                    <% end %>
+                    <a href="#<%= post[:filename] %>">
+                        <div class="post post-list <%= post[:tags].map{|a| 'tag-'+a}.join(" ") %>">
+                            <div class="title"><%= post[:title] %></div>
+                            <span class="meta"><%= post[:date].strftime("%b %d") %></span>
+                        </div>
+                    </a>
+                <% end %>
+            </div>
+        </div> <!-- .scrollable-sidebar-part -->
+    </div> <!-- #secondary -->
+    <!-- {% include footer.html %} -->
+    <script>
+        document.getElementById('scrollable-sidebar-part').style.height = (window.innerHeight - document.getElementById('fixed-sidebar-part').clientHeight)*0.9+'px';
+    </script>
+  </body>
+</html>
