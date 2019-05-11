@@ -83,6 +83,11 @@ def extract_markdown(path)
                 title = $1
             end
 
+            if line =~ /^author:\s?(.+?)$/
+                title = $1 + "『" + title + "』"
+                tags = ["book"]
+            end
+
             if line =~ /^tags:\s?(.+?)$/
                 tags = $1.downcase.split(/^?\s*#/).reject{|a| a.size < 1}
             end
@@ -94,7 +99,7 @@ end
 
 def traverse(path)
     if FileTest.directory?(path)
-        Dir.foreach(path) do |filename|
+        Dir.entries(path).sort.each do |filename|
             next if not /^[0-9]/ =~ filename
 
             new_path = path.sub(/\/+$/,"") + "/" + filename
