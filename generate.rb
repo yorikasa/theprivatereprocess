@@ -4,7 +4,7 @@ require 'FileUtils'
 require 'erb'
 require 'kramdown'
 
-@root_directory = '/Users/yuki/Dropbox/Sites/ThePrivateReprocess/'
+@root_directory = '/Users/yuki/Documents/Sites/ThePrivateReprocess/'
 @posts_directory_path = @root_directory+'_posts'
 @html_directory_path = @root_directory+'diary'
 
